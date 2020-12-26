@@ -7,7 +7,9 @@ import model.Lesson
 import model.Subject
 import model.User
 import network.response.BaseResponse
+import org.w3c.files.File
 import org.w3c.xhr.XMLHttpRequest
+import utils.*
 
 class NetworkDatasource {
 
@@ -17,33 +19,33 @@ class NetworkDatasource {
         xmlHttp.send()
     }
 
-    fun getLessonsByUserId(id: Int, callback: (List<Lesson>?) -> Unit) {
+    fun getLessonsByUserId(id: Int, callback: (Array<Lesson>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("/user/lesson").addPathParam(id))
-        getResponse(callback)
+        getResponseList(callback)
         xmlHttp.send()
     }
 
-    fun getEvaluationsForUser(id: Int, callback: (List<Evaluation>?) -> Unit) {
+    fun getEvaluationsForUser(id: Int, callback: (Array<Evaluation>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("user/evaluation").addPathParam(id))
-        getResponse(callback)
+        getResponseList(callback)
         xmlHttp.send()
     }
 
-    fun getStudentsEvaluationsForTeacher(id: Int, callback: (List<Evaluation>?) -> Unit) {
+    fun getStudentsEvaluationsForTeacher(id: Int, callback: (Array<Evaluation>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("teacher/evaluation").addPathParam(id))
-        getResponse(callback)
+        getResponseList(callback)
         xmlHttp.send()
     }
 
-    fun getTeacherLessons(id: Int, callback: (List<Lesson>?) -> Unit) {
+    fun getTeacherLessons(id: Int, callback: (Array<Lesson>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("teacher/lesson").addPathParam(id))
-        getResponse(callback)
+        getResponseList(callback)
         xmlHttp.send()
     }
 
-    fun getTeacherSubject(id: Int, callback: (List<Subject>?) -> Unit) {
+    fun getTeacherSubject(id: Int, callback: (Array<Subject>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("teacher/subject").addPathParam(id))
-        getResponse(callback)
+        getResponseList(callback)
         xmlHttp.send()
     }
 
@@ -60,8 +62,8 @@ class NetworkDatasource {
         getResponse(callback)
         xmlHttp.send()
     }
-
-  /*  fun createLessonByTeacher(id: Int, title: String, description: String, date: Long, checkFile: File, callback: (String) -> Unit) {
+/*
+    fun createLessonByTeacher(id: Int, title: String, description: String, date: Long, checkFile: File, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("teacher/create/lesson"))
         getResponse(callback)
         xmlHttp.send(JSON.stringify(createLessonJson(id, title, description, date, checkFile)))
@@ -97,6 +99,17 @@ class NetworkDatasource {
                 callback.invoke(null)
             } else {
                 callback.invoke(JSON.parse<BaseResponse<T>>(xmlHttp.responseText).__values__)
+            }
+
+        }
+    }
+
+    private fun <T> getResponseList(callback: (Array<T>?) -> Unit) {
+        xmlHttp.onload = {
+            if (xmlHttp.response == "null") {
+                callback.invoke(null)
+            } else {
+                callback.invoke(JSON.parse<Array<BaseResponse<T>>>(xmlHttp.responseText).map(BaseResponse<T>::__values__).toTypedArray())
             }
 
         }
