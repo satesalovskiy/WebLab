@@ -121,6 +121,8 @@ class NetworkDatasource {
         xmlHttp.onload = {
             if (xmlHttp.status == 200.toShort()) {
                 callback.invoke(xmlHttp.statusText)
+            }else{
+                callback.invoke(ERROR)
             }
         }
     }
@@ -130,6 +132,7 @@ class NetworkDatasource {
         private const val GET = "GET"
         private const val POST = "POST"
         const val BASE_URL = "https://vf1x0u.deta.dev/"
+        const val ERROR = "error"
     }
 
 }
