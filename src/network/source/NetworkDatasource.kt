@@ -20,7 +20,7 @@ class NetworkDatasource {
     }
 
     fun getLessonsByUserId(id: Int, callback: (Array<Lesson>?) -> Unit) {
-        xmlHttp.open(GET, BASE_URL.setPath("/user/lesson").addPathParam(id))
+        xmlHttp.open(GET, BASE_URL.setPath("user/lesson").addPathParam(id))
         getResponseList(callback)
         xmlHttp.send()
     }
@@ -62,36 +62,38 @@ class NetworkDatasource {
         getResponse(callback)
         xmlHttp.send()
     }
-/*
-    fun createLessonByTeacher(id: Int, title: String, description: String, date: Long, checkFile: File, callback: (String) -> Unit) {
+
+    fun createLessonByTeacher(id: Int, title: String, description: String, date: Int, checkFile: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("teacher/create/lesson"))
-        getResponse(callback)
+        getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(createLessonJson(id, title, description, date, checkFile)))
     }
 
     fun createSubjectByTeacher(id: Int, title: String, type: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("teacher/create/subject"))
-        getResponse(callback)
+        getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(createSubjectJson(id, title, type)))
     }
 
     fun updateMark(userId: Int, lessonId: Int, file: File, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/mark"))
-        getResponse(callback)
+        getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateMarkJson(userId, lessonId, file)))
     }
 
     fun updateProfilePhoto(id: Int, photo: File, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/photo"))
-        getResponse(callback)
+        getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateProfilePhotoJson(id, photo)))
     }
 
-    fun registration(name: String, surname: String, email: String, password: String, birthday: Long, isTeacher: Boolean, callback: (String) -> Unit) {
-        xmlHttp.open(POST, BASE_URL.setPath("user/create"))
-        getResponse(callback)
+    fun registration(name: String, surname: String, email: String, password: String, birthday: Int, isTeacher: Boolean, callback: (String) -> Unit) {
+        xmlHttp.open(POST, BASE_URL.setPath("user/create/"))
+        xmlHttp.setRequestHeader("content-type", "application/json;charset=UTF-8")
+        getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(createUserJson(name, surname, email, password, birthday, isTeacher)))
-    }*/
+    }
+
 
     private fun <T> getResponse(callback: (T?) -> Unit) {
         xmlHttp.onload = {
@@ -112,6 +114,14 @@ class NetworkDatasource {
                 callback.invoke(JSON.parse<Array<BaseResponse<T>>>(xmlHttp.responseText).map(BaseResponse<T>::__values__).toTypedArray())
             }
 
+        }
+    }
+
+    private fun getResponseAfterPost(callback: (String) -> Unit) {
+        xmlHttp.onload = {
+            if (xmlHttp.status == 200.toShort()) {
+                callback.invoke(xmlHttp.statusText)
+            }
         }
     }
 

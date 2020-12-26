@@ -1,8 +1,7 @@
+import kotlinx.browser.document
+import kotlinx.browser.window
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.get
-import kotlin.browser.document
-import kotlin.browser.window
 
 lateinit var emailP: String
 lateinit var passwordP: String
@@ -13,6 +12,13 @@ fun main() {
     if( path.contains("input.html")){
         val loginButton = document.getElementById("get_input_button") as HTMLButtonElement
 
+
+        //todo это мне для тестов запросов, у себя можешь удалять это
+/*        val source = NetworkDatasource()
+
+        source.isTeacher(3){
+           console.log(it)
+        }*/
 
         loginButton!!.addEventListener("click", {
             val email = document.getElementById("input_email") as HTMLInputElement
