@@ -164,8 +164,14 @@ private fun handleTask() {
     val input1 = document.getElementById("file-input1") as HTMLInputElement
     input1.addEventListener("change", {
         console.log("${input1.files?.length}")
-
-        result = "решение"
+        val input1File = input1.files?.get(0)!!
+        val fr = FileReader()
+        fr.readAsBinaryString(input1File)
+        fr.onload = {
+            console.log(it.target)
+            result = fr.result as String
+            it
+        }
 
     })
 
@@ -319,7 +325,6 @@ private fun handleProfile() {
             source.updateProfilePhoto(userId, fr.result as String) { response ->
                 console.log(response)
             }
-
         }
     })
 
