@@ -18,7 +18,8 @@ fun handlePerformance() {
             console.log(it.size)
             it.forEach { lesson ->
                 lesson.forEach { one ->
-                    console.log("user=${one.user},lesson=${one.lesson}, mark=${one.mark}")
+
+
                     table.innerHTML +=
                             """
                                   <tr style="height: 75px;">
@@ -27,6 +28,7 @@ fun handlePerformance() {
                     <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-9">${one.mark}</td>
                 </tr>
                                 """
+                    //console.log("user=${user.name},lesson=${one.lesson}, mark=${one.mark}")
                 }
             }
         }
