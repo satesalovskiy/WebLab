@@ -7,7 +7,6 @@ import model.Lesson
 import model.Subject
 import model.User
 import network.response.BaseResponse
-import org.w3c.files.File
 import org.w3c.xhr.XMLHttpRequest
 import utils.*
 
@@ -82,13 +81,13 @@ class NetworkDatasource {
         xmlHttp.send(JSON.stringify(createSubjectJson(id, title, type)))
     }
 
-    fun updateMark(userId: Int, lessonId: Int, file: File, callback: (String) -> Unit) {
+    fun updateMark(userId: Int, lessonId: Int, file: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/mark"))
         getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateMarkJson(userId, lessonId, file)))
     }
 
-    fun updateProfilePhoto(id: Int, photo: File, callback: (String) -> Unit) {
+    fun updateProfilePhoto(id: Int, photo: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/photo"))
         getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateProfilePhotoJson(id, photo)))

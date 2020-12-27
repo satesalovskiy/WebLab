@@ -26,13 +26,13 @@ fun createSubjectJson(id: Int, title: String, type: String) = json(
         "type_checking" to type
 )
 
-fun updateMarkJson(userId: Int, lessonId: Int, file: File) = json(
+fun updateMarkJson(userId: Int, lessonId: Int, file: String) = json(
         "user_id" to userId,
         "lesson_id" to lessonId,
         "file" to file
 )
 
-fun updateProfilePhotoJson(id: Int, photo: File) = json(
+fun updateProfilePhotoJson(id: Int, photo: String) = json(
         "user_id" to id,
         "photo" to photo
 )
