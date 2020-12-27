@@ -2,7 +2,6 @@ import model.User
 import network.source.NetworkDatasource
 import org.w3c.dom.*
 import org.w3c.files.FileReader
-import org.w3c.files.FileReaderSync
 import org.w3c.files.get
 import kotlin.browser.document
 import kotlin.browser.window
@@ -48,8 +47,7 @@ fun main() {
         handleAssignments()
     } else if (path.contains("one_student_task.html")) {
         console.log("in task =${window.location.search}")
-        userId = window.location.search.substringAfter("=").toInt()
-        initHrefs()
+
         handleTask()
 
     } else if (path.contains("home_teacher.html")) {
@@ -156,13 +154,21 @@ private fun handleTask() {
         }
     }
 
+    initHrefs()
+
     var result = ""
 
     val input1 = document.getElementById("file-input1") as HTMLInputElement
     input1.addEventListener("change", {
         console.log("${input1.files?.length}")
-
-        result = "решение"
+        val input1File = input1.files?.get(0)!!
+        val fr = FileReader()
+        fr.readAsBinaryString(input1File)
+        fr.onload = {
+            console.log(it.target)
+            result = fr.result as String
+            it
+        }
 
     })
 
@@ -316,7 +322,6 @@ private fun handleProfile() {
             source.updateProfilePhoto(userId, fr.result as String) { response ->
                 console.log(response)
             }
-
         }
     })
 
