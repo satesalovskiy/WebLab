@@ -20,7 +20,7 @@ class NetworkDatasource {
     }
 
     fun getLessonsByUserId(id: Int, callback: (Array<Lesson>?) -> Unit) {
-        xmlHttp.open(GET, BASE_URL.setPath("/user/lesson").addPathParam(id))
+        xmlHttp.open(GET, BASE_URL.setPath("user/lesson").addPathParam(id))
         getResponseList(callback)
         xmlHttp.send()
     }

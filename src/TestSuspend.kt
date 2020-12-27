@@ -1,4 +1,4 @@
-import kotlinx.browser.window
+import kotlin.browser.window
 import kotlin.coroutines.*
 import kotlin.js.Promise
 
