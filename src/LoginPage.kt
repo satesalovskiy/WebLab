@@ -48,8 +48,6 @@ fun main() {
         handleAssignments()
     } else if (path.contains("one_student_task.html")) {
         console.log("in task =${window.location.search}")
-        userId = window.location.search.substringAfter("=").toInt()
-        initHrefs()
         handleTask()
 
     } else if (path.contains("home_teacher.html")) {
@@ -158,6 +156,8 @@ private fun handleTask() {
             assigId = it.substringAfter("=").toInt()
         }
     }
+
+    initHrefs()
 
     var result = ""
 
