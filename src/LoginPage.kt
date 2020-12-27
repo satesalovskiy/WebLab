@@ -48,6 +48,8 @@ fun main() {
         handleAssignments()
     } else if (path.contains("one_student_task.html")) {
         console.log("in task =${window.location.search}")
+        userId = window.location.search.substringAfter("=").toInt()
+        initHrefs()
         handleTask()
 
     } else if (path.contains("home_teacher.html")) {
@@ -84,6 +86,8 @@ private fun handleTaskCreation() {
 }
 
 private fun handlePerformance() {
+    val progressV = document.getElementById("progress") as HTMLDivElement
+    progressV.style.visibility = "visible"
     source.getStudentsEvaluationsForTeacher(userId) {
         it?.let {
             console.log(it.size)
@@ -93,11 +97,16 @@ private fun handlePerformance() {
                 }
             }
         }
+
+        progressV.style.visibility = "hidden"
+
     }
 }
 
 private fun handleTasks() {
     val list = document.getElementById("list_of_tasks") as HTMLDivElement
+    val progressV = document.getElementById("progress") as HTMLDivElement
+    progressV.style.visibility = "visible"
     val createButton = document.getElementById("create_task_button") as HTMLHyperlinkElementUtils
     createButton.href = "create_one_-task.html?u_id=${userId}"
 
@@ -129,10 +138,14 @@ private fun handleTasks() {
             }
 
         }
+
+        progressV.style.visibility = "hidden"
     }
 }
 
 private fun handleTask() {
+    val progressV = document.getElementById("progress") as HTMLDivElement
+
     val splits = window.location.search.split("&")
     splits.forEach {
         if (it.contains("u_id")) {
@@ -163,13 +176,19 @@ private fun handleTask() {
 
     val button = document.getElementById("send_answer") as HTMLButtonElement
     button.addEventListener("click", {
+        progressV.style.visibility = "visible"
         source.updateMark(userId, assigId, result) {
+            progressV.style.visibility = "hidden"
             window.open("student_-assignments.html?u_id=$userId")
+
         }
+
     })
 
 
     val text = document.getElementById("assig_title_descr") as HTMLHeadingElement
+
+    progressV.style.visibility = "visible"
     source.getLessonsByUserId(userId) {
         it?.let {
             it.forEach {
@@ -178,7 +197,10 @@ private fun handleTask() {
                 }
             }
         }
+
+        progressV.style.visibility = "hidden"
     }
+
 }
 
 private fun initHrefsTeacher() {
@@ -206,6 +228,8 @@ private fun initHrefs() {
 
 private fun handleProgress() {
     val table = document.getElementById("whole_table") as HTMLTableSectionElement
+    val progressV = document.getElementById("progress") as HTMLDivElement
+    progressV.style.visibility = "visible"
     source.getEvaluationsForUser(userId) {
 
         it?.let {
@@ -233,11 +257,16 @@ private fun handleProgress() {
             }
 
         }
+
+        progressV.style.visibility = "hidden"
     }
 }
 
 private fun handleAssignments() {
     val list = document.getElementById("assig_list") as HTMLDivElement
+    val progressV = document.getElementById("progress") as HTMLDivElement
+    progressV.style.visibility = "visible"
+
 
     source.getLessonsByUserId(userId) {
         it?.let {
@@ -265,11 +294,16 @@ private fun handleAssignments() {
             }
 
         }
+        progressV.style.visibility = "hidden"
+
     }
 }
 
 private fun handleProfile() {
     val changeProfileImage = document.getElementById("change_profile_image") as HTMLInputElement
+    val progressV = document.getElementById("progress") as HTMLDivElement
+    progressV.style.visibility = "visible"
+
     changeProfileImage.addEventListener("change", {
         console.log("changed")
         document.getElementById("profile_image")?.setAttribute("src", "https://img.mvideo.ru/Pdb/50135799b1.jpg")
@@ -286,6 +320,7 @@ private fun handleProfile() {
         it?.let {
             name.textContent = it.name
             email.textContent = it.email
+            progressV.style.visibility = "hidden"
         }
     }
 }
@@ -293,6 +328,8 @@ private fun handleProfile() {
 
 private fun startLogin() {
     val loginButton = document.getElementById("get_input_button") as HTMLButtonElement
+    val progress = document.getElementById("progress") as HTMLDivElement
+
 
 
     source.getUserById(3) {
@@ -307,17 +344,25 @@ private fun startLogin() {
         }
     }
 
+
+
     loginButton!!.addEventListener("click", {
+
+        progress.style.visibility = "visible"
+
         val email = document.getElementById("input_email") as HTMLInputElement
         val password = document.getElementById("input_password") as HTMLInputElement
 
         source.auth(email.value, password.value) {
             if (it == null) {
                 window.alert("No such user")
+
+                progress.style.visibility = "hidden"
             } else {
                 val id = it.id
 
                 source.isTeacher(id) {
+                    progress.style.visibility = "hidden"
                     if (it) {
                         window.open("home_teacher.html?u_id=$id")
                     } else {
@@ -342,7 +387,7 @@ private fun startRegister() {
     val teacher = name.value.contains("teacher")
 
     registerButton!!.addEventListener("click", {
-        source.registration(name.value, surname.value, email.value, password.value, 1000, teacher){
+        source.registration(name.value, surname.value, email.value, password.value, 1000, teacher) {
             source.auth(email.value, password.value) {
                 if (it == null) {
                     window.alert("No such user")
