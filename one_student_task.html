@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="one_student_task.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+
 
     <link id="u-theme-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -60,21 +60,21 @@
             </div>
             <div class="u-custom-menu u-nav-container">
                 <ul class="u-nav u-spacing-30 u-unstyled u-nav-1">
-                    <li class="u-nav-item"><a
-                            class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
-                            href="home.html" style="padding: 10px 0px;">Главная</a>
+                    <li class="u-nav-item"><a id="home_with_id1"
+                                              class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
+                                              href="home.html" style="padding: 10px 0px;">Главная</a>
                     </li>
-                    <li class="u-nav-item"><a
-                            class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
-                            href="student_profile.html" style="padding: 10px 0px;">Профиль</a>
+                    <li class="u-nav-item"><a id="profile_with_id1"
+                                              class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
+                                              href="student_profile.html" style="padding: 10px 0px;">Профиль</a>
                     </li>
-                    <li class="u-nav-item"><a
-                            class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
-                            href="student_-assignments.html" style="padding: 10px 0px;">Задания</a>
+                    <li class="u-nav-item"><a id="assig_with_id1"
+                                              class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
+                                              href="student_-assignments.html" style="padding: 10px 0px;">Задания</a>
                     </li>
-                    <li class="u-nav-item"><a
-                            class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
-                            href="student_-progress.html" style="padding: 10px 0px;">Успеваемость</a>
+                    <li class="u-nav-item"><a id="eval_with_id1"
+                                              class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
+                                              href="student_-progress.html" style="padding: 10px 0px;">Успеваемость</a>
                     </li>
                 </ul>
             </div>
@@ -83,16 +83,20 @@
                     <div class="u-sidenav-overflow">
                         <div class="u-menu-close"></div>
                         <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="home.html"
+                            <li class="u-nav-item"><a id="home_with_id" class="u-button-style u-nav-link"
+                                                      href="home.html"
                                                       style="padding: 10px 0px;">Главная</a>
                             </li>
-                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="student_profile.html"
+                            <li class="u-nav-item"><a id="profile_with_id" class="u-button-style u-nav-link"
+                                                      href="student_profile.html"
                                                       style="padding: 10px 0px;">Профиль</a>
                             </li>
-                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="student_-assignments.html"
+                            <li class="u-nav-item"><a id="assig_with_id" class="u-button-style u-nav-link"
+                                                      href="student_-assignments.html"
                                                       style="padding: 10px 0px;">Задания</a>
                             </li>
-                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="student_-progress.html"
+                            <li class="u-nav-item"><a id="eval_with_id" class="u-button-style u-nav-link"
+                                                      href="student_-progress.html"
                                                       style="padding: 10px 0px;">Успеваемость</a>
                             </li>
                         </ul>
@@ -106,17 +110,20 @@
     </div>
 </header>
 <section class="u-clearfix u-image u-section-1" id="sec-8b83" data-image-width="923" data-image-height="720">
+    <div id="progress"
+         style="background-color:rgba(0, 0, 0, 0.0); height:50px; width: 50px; position: absolute; margin: 20px; visibility: hidden;">
+        <img src="images/ajax-loader.gif">
+    </div>
     <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-grey-10 u-group u-radius-7 u-shape-round u-group-1">
             <div class="u-container-layout u-valign-top u-container-layout-1">
-                <h3 class="u-text u-text-body-color u-text-default u-text-1">Тут должен лежать заголовок и условие
-                    задачи. </h3>
+                <h3 id="assig_title_descr" class="u-text u-text-body-color u-text-default u-text-1">...</h3>
             </div>
         </div>
         <div class="u-container-style u-grey-10 u-group u-radius-7 u-shape-round u-group-2">
-            <div class="u-container-layout u-valign-top u-container-layout-2">
-                <h5 class="u-text u-text-default u-text-2">Тут должно лежать решение задачи ученика</h5>
-            </div>
+            <input type="text" class="u-container-layout u-valign-top u-container-layout-2" placeholder="Решение">
+
+            </input>
         </div>
         <a class="u-btn u-btn-round u-button-style u-hover-custom-color-2 u-palette-2-dark-3 u-radius-6 u-btn-1"><span
                 class="u-icon u-text-grey-10 u-icon-1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 408 408" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M332,121.921H184.8l-29.28-34.8c-0.985-1.184-2.461-1.848-4-1.8H32.76C14.628,85.453,0,100.189,0,118.321v214.04    c0.022,18.194,14.766,32.938,32.96,32.96H332c18.194-0.022,32.938-14.766,32.96-32.96v-177.48    C364.938,136.687,350.194,121.943,332,121.921z"></path>
@@ -138,10 +145,10 @@
             <input id="file-input2" type="file" name="name" multiple style="font-size: 80%;"/>
 
         </a>
-        <a href="student_-assignments.html" data-page-id="37218124"
-           class="u-btn u-btn-round u-button-style u-hover-custom-color-2 u-palette-2-dark-3 u-radius-6 u-text-grey-10 u-btn-3">
+        <button id="send_answer" data-page-id="37218124"
+                class="u-btn u-btn-round u-button-style u-hover-custom-color-2 u-palette-2-dark-3 u-radius-6 u-text-grey-10 u-btn-3">
             <span style="font-size: 15px;">Отправить</span>
-        </a>
+        </button>
     </div>
 </section>
 
