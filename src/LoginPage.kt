@@ -1,15 +1,12 @@
 import model.User
 import network.source.NetworkDatasource
 import org.w3c.dom.*
+import org.w3c.files.FileReader
+import org.w3c.files.FileReaderSync
+import org.w3c.files.get
 import kotlin.browser.document
 import kotlin.browser.window
 
-
-lateinit var localName: String
-lateinit var localSurname: String
-lateinit var localDate: String
-lateinit var localEmail: String
-lateinit var localPassword: String
 lateinit var source: NetworkDatasource
 
 var userId: Int = 0
@@ -65,11 +62,34 @@ fun main() {
         userId = window.location.search.substringAfter("=").toInt()
         initHrefsTeacher()
 
-        source.getStudentsEvaluationsForTeacher(userId) {
-            it?.let {
-                console.log(it.size)
-                it.forEach { eval ->
-                    console.log("${eval.user}, ${eval.mark}")
+        handlePerformance()
+    } else if (path.contains("create_one_-task.html")) {
+        userId = window.location.search.substringAfter("=").toInt()
+        handleTaskCreation()
+    }
+}
+
+private fun handleTaskCreation() {
+    val title = document.getElementById("title_enter") as HTMLInputElement
+    val descr = document.getElementById("descr_enter") as HTMLInputElement
+
+    val confirm = document.getElementById("confirm_button") as HTMLButtonElement
+    confirm.addEventListener("click", {
+        if (title.value.isNotBlank() && descr.value.isNotBlank()) {
+            source.createLessonByTeacher(userId, title.value, descr.value, 121212, "nothing") {
+                window.open("tasks.html?u_id=$userId")
+            }
+        }
+    })
+}
+
+private fun handlePerformance() {
+    source.getStudentsEvaluationsForTeacher(userId) {
+        it?.let {
+            console.log(it.size)
+            it.forEach { eval ->
+                eval.forEach { one ->
+                    console.log("user=${one.user},lesson=${one.lesson}, mark=${one.mark}")
                 }
             }
         }
@@ -78,6 +98,9 @@ fun main() {
 
 private fun handleTasks() {
     val list = document.getElementById("list_of_tasks") as HTMLDivElement
+    val createButton = document.getElementById("create_task_button") as HTMLHyperlinkElementUtils
+    createButton.href = "create_one_-task.html?u_id=${userId}"
+
     source.getTeacherLessons(userId) {
         it?.let {
             it.forEach {
@@ -119,6 +142,32 @@ private fun handleTask() {
             assigId = it.substringAfter("=").toInt()
         }
     }
+
+    var result = ""
+
+    val input1 = document.getElementById("file-input1") as HTMLInputElement
+    input1.addEventListener("change", {
+        console.log("${input1.files?.length}")
+
+        result = "решение"
+
+    })
+
+    val input2 = document.getElementById("file-input2") as HTMLInputElement
+    input2.addEventListener("change", {
+        console.log("${input2.files?.length}")
+
+        result = "решение"
+
+    })
+
+    val button = document.getElementById("send_answer") as HTMLButtonElement
+    button.addEventListener("click", {
+        source.updateMark(userId, assigId, result) {
+            window.open("student_-assignments.html?u_id=$userId")
+        }
+    })
+
 
     val text = document.getElementById("assig_title_descr") as HTMLHeadingElement
     source.getLessonsByUserId(userId) {
@@ -246,12 +295,12 @@ private fun startLogin() {
     val loginButton = document.getElementById("get_input_button") as HTMLButtonElement
 
 
-    source.getUserById(3){
+    source.getUserById(3) {
         it?.let {
             console.log("1 = ${it.email} ${it.password}")
         }
 
-        source.getUserById(1){
+        source.getUserById(1) {
             it?.let {
                 console.log("2 = ${it.email} ${it.password}")
             }
@@ -262,10 +311,10 @@ private fun startLogin() {
         val email = document.getElementById("input_email") as HTMLInputElement
         val password = document.getElementById("input_password") as HTMLInputElement
 
-        source.auth(email.value, password.value){
-            if(it == null){
+        source.auth(email.value, password.value) {
+            if (it == null) {
                 window.alert("No such user")
-            } else{
+            } else {
                 val id = it.id
 
                 source.isTeacher(id) {
@@ -284,24 +333,31 @@ private fun startLogin() {
 
 private fun startRegister() {
     console.log("in register")
+    val name = document.getElementById("register_name") as HTMLInputElement
+    val surname = document.getElementById("register_surname") as HTMLInputElement
+    val date = document.getElementById("register_date") as HTMLInputElement
+    val email = document.getElementById("register_email") as HTMLInputElement
+    val password = document.getElementById("register_password") as HTMLInputElement
     val registerButton = document.getElementById("register_button") as HTMLButtonElement
+    val teacher = name.value.contains("teacher")
+
     registerButton!!.addEventListener("click", {
-        val name = document.getElementById("register_name") as HTMLInputElement
-        val surname = document.getElementById("register_surname") as HTMLInputElement
-        val date = document.getElementById("register_date") as HTMLInputElement
-        val email = document.getElementById("register_email") as HTMLInputElement
-        val password = document.getElementById("register_password") as HTMLInputElement
-        //window.alert("${name.value}, ${surname.name}, ${date.value}, ${email.value}, ${password.value}")
+        source.registration(name.value, surname.value, email.value, password.value, 1000, teacher){
+            source.auth(email.value, password.value) {
+                if (it == null) {
+                    window.alert("No such user")
+                } else {
+                    val id = it.id
 
-        if (tryToRegister(name.value, surname.value, email.value, date.value, password.value)) {
-
-            localName = name.value
-            localSurname = name.value
-            localDate = date.value
-            localEmail = email.value
-            localPassword = password.value
-            window.open("student_profile.html")
-
+                    source.isTeacher(id) {
+                        if (it) {
+                            window.open("home_teacher.html?u_id=$id")
+                        } else {
+                            window.open("home.html?u_id=$id")
+                        }
+                    }
+                }
+            }
         }
     })
 }
