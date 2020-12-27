@@ -10,9 +10,17 @@ import utils.*
 class NetworkDatasource {
 
     fun getUserById(id: Int, callback: (User?) -> Unit) {
-        xmlHttp.open(GET, BASE_URL.setPath("user/profile").addPathParam(id))
-        getResponse(callback)
-        xmlHttp.send()
+        val xhr = XMLHttpRequest()
+        xhr.open(GET, BASE_URL.setPath("user/profile").addPathParam(id))
+        xhr.onload = {
+            if (xhr.response == "null") {
+                callback.invoke(null)
+            } else {
+                callback.invoke(JSON.parse<BaseResponse<User>>(xhr.responseText).__values__)
+            }
+
+        }
+        xhr.send()
     }
 
     fun getLessonsByUserId(id: Int, callback: (Array<Lesson>?) -> Unit) {
