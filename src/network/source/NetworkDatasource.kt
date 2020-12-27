@@ -31,9 +31,16 @@ class NetworkDatasource {
         xmlHttp.send()
     }
 
-    fun getStudentsEvaluationsForTeacher(id: Int, callback: (Array<Evaluation>?) -> Unit) {
+    fun getStudentsEvaluationsForTeacher(id: Int, callback: (Array<Array<Evaluation>>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("teacher/evaluation").addPathParam(id))
-        getResponseList(callback)
+        xmlHttp.onload = {
+            if (xmlHttp.response == "null") {
+                callback.invoke(null)
+            } else {
+                callback.invoke(JSON.parse<Array<Array<BaseResponse<Evaluation>>>>(xmlHttp.responseText).map { it.map { it.__values__ }.toTypedArray() }.toTypedArray())
+            }
+
+        }
         xmlHttp.send()
     }
 
@@ -121,7 +128,7 @@ class NetworkDatasource {
         xmlHttp.onload = {
             if (xmlHttp.status == 200.toShort()) {
                 callback.invoke(xmlHttp.statusText)
-            }else{
+            } else {
                 callback.invoke(ERROR)
             }
         }
