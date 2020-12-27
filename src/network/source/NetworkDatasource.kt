@@ -2,10 +2,7 @@ package network.source
 
 import ext.addPathParam
 import ext.setPath
-import model.Evaluation
-import model.Lesson
-import model.Subject
-import model.User
+import model.*
 import network.response.BaseResponse
 import org.w3c.xhr.XMLHttpRequest
 import utils.*
@@ -21,6 +18,18 @@ class NetworkDatasource {
     fun getLessonsByUserId(id: Int, callback: (Array<Lesson>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("user/lesson").addPathParam(id))
         getResponseList(callback)
+        xmlHttp.send()
+    }
+
+    fun getSubjectInfoForUser(id: Int, callback: (SubjectInfo?) -> Unit) {
+        xmlHttp.open(GET, BASE_URL.setPath("user/subject").addPathParam(id))
+        xmlHttp.onload = {
+            if(xmlHttp.response == "null"){
+                callback.invoke(null)
+            }else{
+                callback.invoke(JSON.parse<SubjectInfo>(xmlHttp.responseText))
+            }
+        }
         xmlHttp.send()
     }
 
@@ -137,7 +146,7 @@ class NetworkDatasource {
         private val xmlHttp = XMLHttpRequest()
         private const val GET = "GET"
         private const val POST = "POST"
-        const val BASE_URL = "https://vf1x0u.deta.dev/"
+        const val BASE_URL = "https://f5nns8.deta.dev/"
         const val ERROR = "error"
     }
 
