@@ -302,18 +302,28 @@ private fun handleAssignments() {
 private fun handleProfile() {
     val changeProfileImage = document.getElementById("change_profile_image") as HTMLInputElement
     val progressV = document.getElementById("progress") as HTMLDivElement
+    val avatar = document.getElementById("profile_image")
     progressV.style.visibility = "visible"
 
     changeProfileImage.addEventListener("change", {
         console.log("changed")
-        document.getElementById("profile_image")?.setAttribute("src", "https://img.mvideo.ru/Pdb/50135799b1.jpg")
+        val file = changeProfileImage.files?.get(0)!!
+        val fr = FileReader()
+        fr.readAsBinaryString(file)
+        fr.onload = {
+            console.log(it.target)
+            avatar?.setAttribute("src", "data:image/gif;base64,${window.btoa(fr.result as String)}")
+            source.updateProfilePhoto(userId, fr.result as String) { response ->
+                console.log(response)
+            }
+
+        }
     })
 
     val name = document.getElementById("profile_s_name") as HTMLHeadingElement
     val email = document.getElementById("profile_s_email") as HTMLHeadingElement
     val courses = document.getElementById("profile_s_courses") as HTMLHeadingElement
     val progress = document.getElementById("profile_s_progress") as HTMLHeadingElement
-
     //name.textContent =
 
     source.getUserById(userId) {
@@ -321,6 +331,12 @@ private fun handleProfile() {
             name.textContent = it.name
             email.textContent = it.email
             progressV.style.visibility = "hidden"
+            it.let { user ->
+                user.avatar?.let { binaryPhoto ->
+                    avatar?.setAttribute("src", "data:image/gif;base64,${window.btoa(binaryPhoto)}")
+                }
+            }
+
         }
     }
 }

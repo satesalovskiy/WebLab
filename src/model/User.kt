@@ -1,7 +1,5 @@
 package model
 
-import org.w3c.files.File
-
 data class User(
         val id: Int,
         val name: String,
@@ -9,6 +7,6 @@ data class User(
         val birthday: Long,
         val email: String,
         val password: String,
-        val avatar: File?,
+        val avatar: String?,
         val is_teacher: Boolean
 )

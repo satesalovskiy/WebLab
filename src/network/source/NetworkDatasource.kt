@@ -98,6 +98,7 @@ class NetworkDatasource {
 
     fun updateProfilePhoto(id: Int, photo: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/photo"))
+        xmlHttp.setRequestHeader("Content-type","application/json")
         getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateProfilePhotoJson(id, photo)))
     }
