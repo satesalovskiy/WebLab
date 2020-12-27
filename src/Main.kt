@@ -1,4 +1,4 @@
-import network.source.NetworkDatasource
+import data.network.source.NetworkDatasource
 import org.w3c.dom.*
 import pages.*
 import kotlin.browser.document

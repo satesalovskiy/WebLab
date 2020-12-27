@@ -1,4 +1,4 @@
-package model
+package data.model
 
 data class Follower(
         val id:Int,

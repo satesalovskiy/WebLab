@@ -1,4 +1,4 @@
-package model
+package data.model
 
 data class Lesson(
         val id: Int,

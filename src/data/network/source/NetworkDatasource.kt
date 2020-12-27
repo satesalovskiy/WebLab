@@ -1,9 +1,9 @@
-package network.source
+package data.network.source
 
 import ext.addPathParam
 import ext.setPath
-import model.*
-import network.response.BaseResponse
+import data.model.*
+import data.network.response.BaseResponse
 import org.w3c.xhr.XMLHttpRequest
 import utils.*
 

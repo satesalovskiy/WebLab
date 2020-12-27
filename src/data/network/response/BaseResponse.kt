@@ -1,4 +1,4 @@
-package network.response
+package data.network.response
 
 data class BaseResponse<T>(
         val __profile__: Any?,
