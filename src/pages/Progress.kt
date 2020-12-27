@@ -16,23 +16,30 @@ fun handleProgress() {
                 console.log("mark ${it.mark}")
                 console.log("lesson ${it.lesson}")
 
-                if (it.mark == null) {
-                    table.innerHTML += """
+                source.getLessonById(it.lesson){innerLesson ->
+                    innerLesson?.let {l ->
+                        if (it.mark == null) {
+                            table.innerHTML += """
               <tr style="height: 74px;">
                 <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black u-table-cell-19">${index+1}</td>
-                <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black">${it.lesson}</td>
+                <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black">${l.title}</td>
                 <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-custom-color-2">Нет решения</td>
               </tr>
             """
-                } else {
-                    table.innerHTML += """
+                        } else {
+                            table.innerHTML += """
               <tr style="height: 74px;">
                 <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black u-table-cell-19">${index+1}</td>
-                <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black">${it.lesson}</td>
+                <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black">${l.title}</td>
                 <td class="u-align-center u-border-2 u-border-grey-50 u-table-cell u-text-black">${it.mark}</td>
               </tr>
             """
+                        }
+                    }
+
                 }
+
+
             }
 
         }

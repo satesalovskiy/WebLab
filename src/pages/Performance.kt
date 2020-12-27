@@ -19,15 +19,21 @@ fun handlePerformance() {
             it.forEach { lesson ->
                 lesson.forEach { one ->
 
+                    source.getLessonInfo(one.user, one.lesson){info->
+                        console.log(info?.userName)
 
-                    table.innerHTML +=
-                            """
+                        table.innerHTML +=
+                                """
                                   <tr style="height: 75px;">
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-7">${one.lesson}</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-8">${one.user}</td>
+                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-7">${info?.lessonTitle}</td>
+                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-8">${info?.userName} ${info?.userSurname}</td>
                     <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-9">${one.mark}</td>
                 </tr>
                                 """
+
+                    }
+
+
                     //console.log("user=${user.name},lesson=${one.lesson}, mark=${one.mark}")
                 }
             }
