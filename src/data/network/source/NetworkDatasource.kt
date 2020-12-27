@@ -32,9 +32,9 @@ class NetworkDatasource {
     fun getSubjectInfoForUser(id: Int, callback: (SubjectInfo?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("user/subject").addPathParam(id))
         xmlHttp.onload = {
-            if(xmlHttp.response == "null"){
+            if (xmlHttp.response == "null") {
                 callback.invoke(null)
-            }else{
+            } else {
                 callback.invoke(JSON.parse<SubjectInfo>(xmlHttp.responseText))
             }
         }
@@ -60,7 +60,7 @@ class NetworkDatasource {
         xmlHttp.send()
     }
 
-    fun getLessonById(id:Int, callback: (Lesson?)->Unit){
+    fun getLessonById(id: Int, callback: (Lesson?) -> Unit) {
         val xhr = XMLHttpRequest()
         xhr.open("GET", BASE_URL.setPath("teacher/lesson_id").addPathParam(id))
         xhr.onload = {
@@ -120,7 +120,7 @@ class NetworkDatasource {
 
     fun updateProfilePhoto(id: Int, photo: String, callback: (String) -> Unit) {
         xmlHttp.open(POST, BASE_URL.setPath("user/update/photo"))
-        xmlHttp.setRequestHeader("Content-type","application/json")
+        xmlHttp.setRequestHeader("Content-type", "application/json")
         getResponseAfterPost(callback)
         xmlHttp.send(JSON.stringify(updateProfilePhotoJson(id, photo)))
     }
@@ -132,6 +132,13 @@ class NetworkDatasource {
         xmlHttp.send(JSON.stringify(createUserJson(name, surname, email, password, birthday, isTeacher)))
     }
 
+    fun getLessonInfo(userId: Int, lessonId: Int, callback: (LessonInfo?) -> Unit) {
+        getLessonById(lessonId) { lesson ->
+            getUserById(userId) { user ->
+                callback.invoke(LessonInfo(userName = user?.name, userSurname = user?.surname, lessonTitle = lesson?.title))
+            }
+        }
+    }
 
     private fun <T> getResponse(callback: (T?) -> Unit) {
         xmlHttp.onload = {
