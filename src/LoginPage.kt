@@ -74,11 +74,14 @@ fun main() {
 private fun handleTaskCreation() {
     val title = document.getElementById("title_enter") as HTMLInputElement
     val descr = document.getElementById("descr_enter") as HTMLInputElement
+    val progress = document.getElementById("progress") as HTMLDivElement
 
     val confirm = document.getElementById("confirm_button") as HTMLButtonElement
     confirm.addEventListener("click", {
+        progress.style.visibility = "visible"
         if (title.value.isNotBlank() && descr.value.isNotBlank()) {
             source.createLessonByTeacher(userId, title.value, descr.value, 121212, "nothing") {
+                progress.style.visibility = "hidden"
                 window.open("tasks.html?u_id=$userId")
             }
         }
@@ -337,6 +340,13 @@ private fun handleProfile() {
                 }
             }
 
+            source.getSubjectInfoForUser(userId){
+                it?.let {info ->
+                    courses.textContent = "Курс: ${info.subject_title}"
+                    progress.textContent = "Прогресс: ${info.count_passed_lessons}/${info.count_lessons}"
+                }
+            }
+
         }
     }
 }
@@ -401,8 +411,10 @@ private fun startRegister() {
     val password = document.getElementById("register_password") as HTMLInputElement
     val registerButton = document.getElementById("register_button") as HTMLButtonElement
     val teacher = name.value.contains("teacher")
+    val progress = document.getElementById("progress") as HTMLDivElement
 
     registerButton!!.addEventListener("click", {
+        progress.style.visibility = "visible"
         source.registration(name.value, surname.value, email.value, password.value, 1000, teacher) {
             source.auth(email.value, password.value) {
                 if (it == null) {
@@ -411,6 +423,7 @@ private fun startRegister() {
                     val id = it.id
 
                     source.isTeacher(id) {
+                        progress.style.visibility = "hidden"
                         if (it) {
                             window.open("home_teacher.html?u_id=$id")
                         } else {
