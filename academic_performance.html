@@ -71,7 +71,8 @@
                     </li>
                     <li class="u-nav-item"><a id="eval_with_id1"
                                               class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-2-base u-text-grey-15 u-text-hover-palette-2-dark-1"
-                                              href="academic_performance.html" style="padding: 10px 0px;">Успеваемость</a>
+                                              href="academic_performance.html"
+                                              style="padding: 10px 0px;">Успеваемость</a>
                     </li>
                 </ul>
             </div>
@@ -103,7 +104,8 @@
     </div>
 </header>
 <section class="u-clearfix u-image u-section-1" id="sec-7efe" data-image-width="923" data-image-height="720">
-    <div id="progress" style="background-color:rgba(0, 0, 0, 0.0); height:50px; width: 50px; position: absolute; margin-left: 20px;margin-top: 20px; visibility: hidden;">
+    <div id="progress"
+         style="background-color:rgba(0, 0, 0, 0.0); height:50px; width: 50px; position: absolute; margin-left: 20px;margin-top: 20px; visibility: hidden;">
         <img src="images/ajax-loader.gif">
     </div>
     <div class="u-clearfix u-sheet u-sheet-1">
@@ -119,49 +121,14 @@
                 </colgroup>
                 <thead class="u-grey-30 u-table-header u-text-black u-table-header-1">
                 <tr style="height: 22px;">
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">ФИО</th>
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок 1</th>
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок 2</th>
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок 3</th>
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок 4</th>
-                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок 5</th>
+                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Урок</th>
+                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Студент</th>
+                    <th class="u-align-center u-border-3 u-border-grey-50 u-table-cell">Оценка</th>
                 </tr>
                 </thead>
-                <tbody class="u-align-center u-custom-color-3 u-table-body u-text-grey-90 u-table-body-1">
-                <tr style="height: 75px;">
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-7">Анисимов Сергей Андреевич</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-8">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-9">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-10">-</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-11">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-12">+</td>
-                </tr>
-                <tr style="height: 39px;">
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-13">Быков Андрей<br>Иванович
-                    </td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-14">-</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-15">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-16">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-17">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-18">+</td>
-                </tr>
-                <tr style="height: 75px;">
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-19">Дружинин Владимир Евгеньевич
-                    </td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-20">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-21">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-22">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-23">-</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-24">+</td>
-                </tr>
-                <tr style="height: 76px;">
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-25">Лаптева Надежда Игоревна</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-26">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-27">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-28">+</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-29">-</td>
-                    <td class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-30">+</td>
-                </tr>
+                <tbody id="whole_table"
+                       class="u-align-center u-custom-color-3 u-table-body u-text-grey-90 u-table-body-1">
+
                 </tbody>
             </table>
         </div>
