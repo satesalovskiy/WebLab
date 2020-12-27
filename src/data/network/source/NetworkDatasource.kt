@@ -60,6 +60,20 @@ class NetworkDatasource {
         xmlHttp.send()
     }
 
+    fun getLessonById(id:Int, callback: (Lesson?)->Unit){
+        val xhr = XMLHttpRequest()
+        xhr.open("GET", BASE_URL.setPath("teacher/lesson_id").addPathParam(id))
+        xhr.onload = {
+            if (xhr.response == "null") {
+                callback.invoke(null)
+            } else {
+                callback.invoke(JSON.parse<BaseResponse<Lesson>>(xhr.responseText).__values__)
+            }
+
+        }
+        xhr.send()
+    }
+
     fun getTeacherLessons(id: Int, callback: (Array<Lesson>?) -> Unit) {
         xmlHttp.open(GET, BASE_URL.setPath("teacher/lesson").addPathParam(id))
         getResponseList(callback)
